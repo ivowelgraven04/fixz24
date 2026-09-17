@@ -149,7 +149,7 @@ export default function Cookiebeleid() {
                 <p className="text-sm text-muted-foreground">
                   <strong style={{ color: "#464888" }}>Fixz24 Financial Services</strong>
                   <br />
-                  Keizersgracht 123, 1015 CJ Amsterdam
+                  Algerastraat 11A, 3125 BS Schiedam
                   <br />
                   KvK: 12345678 | BTW: NL123456789B01
                 </p>

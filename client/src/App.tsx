@@ -10,6 +10,7 @@ import Diensten from "./pages/Diensten";
 import Tarieven from "./pages/Tarieven";
 import Contact from "./pages/Contact";
 import Cookiebeleid from "./pages/Cookiebeleid";
+import Privacybeleid from "./pages/Privacybeleid";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route path="/cookiebeleid" component={Cookiebeleid} />
+      <Route path="/privacybeleid" component={Privacybeleid} />
       <Route path="/404" component={NotFound} />
       <Route component={NotFound} />
     </Switch>

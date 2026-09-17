@@ -96,7 +96,7 @@ export default function OverOns() {
             </div>
             <div className="grid grid-cols-2 gap-4 fade-up delay-300">
               {[
-                { year: "2014", event: "Fixz24 opgericht in Amsterdam" },
+                { year: "2014", event: "Fixz24 opgericht" },
                 { year: "2017", event: "Lancering digitaal klantportaal" },
                 { year: "2020", event: "Uitbreiding naar heel Nederland" },
                 { year: "2024", event: "500+ tevreden klanten bereikt" },

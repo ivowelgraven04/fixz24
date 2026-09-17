@@ -24,24 +24,38 @@ export default function Contact() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [honeypot, setHoneypot] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.naam || !form.email || !form.bericht) {
       toast.error("Vul alle verplichte velden in.");
       return;
     }
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const r = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...form, website: honeypot }),
+      });
+      const data = (await r.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!r.ok || !data.ok) {
+        throw new Error(data.error || "Verzenden is niet gelukt.");
+      }
       setSubmitted(true);
       toast.success("Uw bericht is verzonden! Wij nemen binnen 24 uur contact op.");
-    }, 1200);
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Verzenden is niet gelukt. Mail ons op info@fixz24.nl.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const contactInfo = [
-    { icon: Phone, label: "Telefoon", value: "+31 (0)20 123 4567", sub: "Ma–Vr 09:00–17:30", href: "tel:+31201234567" },
+    { icon: Phone, label: "Telefoon", value: "085 - 235 50 81", sub: "Ma t/m vr 09:00 - 17:30", href: "tel:+31852355081" },
     { icon: Mail, label: "E-mail", value: "info@fixz24.nl", sub: "Reactie binnen 24 uur", href: "mailto:info@fixz24.nl" },
-    { icon: MapPin, label: "Adres", value: "Keizersgracht 123", sub: "1015 CJ Amsterdam" },
+    { icon: MapPin, label: "Adres", value: "Algerastraat 11A", sub: "3125 BS Schiedam", href: "https://maps.google.com/?q=Algerastraat+11A+3125+BS+Schiedam" },
     { icon: Clock, label: "Openingstijden", value: "Ma t/m vr", sub: "09:00 – 17:30 uur" },
   ];
 
@@ -81,7 +95,7 @@ export default function Contact() {
                     <div>
                       <div className="text-xs font-semibold uppercase tracking-wider mb-0.5" style={{ color: "#ac9773" }}>{item.label}</div>
                       {item.href
-                        ? <a href={item.href} className="font-medium text-sm transition-colors hover:underline" style={{ color: "#1a1a2e" }}>{item.value}</a>
+                        ? <a href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined} className="font-medium text-sm transition-colors hover:underline" style={{ color: "#1a1a2e" }}>{item.value}</a>
                         : <div className="font-medium text-sm" style={{ color: "#1a1a2e" }}>{item.value}</div>
                       }
                       <div className="text-xs text-muted-foreground">{item.sub}</div>
@@ -129,6 +143,11 @@ export default function Contact() {
                 <div className="rounded-2xl p-8" style={{ border: "1px solid rgba(70,72,136,0.1)", boxShadow: "0 8px 40px rgba(70,72,136,0.08)" }}>
                   <h2 className="text-2xl mb-6" style={{ color: "#1a1a2e", fontFamily: "Playfair Display, serif" }}>Stuur ons een bericht</h2>
                   <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Honeypot tegen spam: onzichtbaar voor mensen */}
+                    <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+                      <label htmlFor="website">Website</label>
+                      <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+                    </div>
                     <div className="grid sm:grid-cols-2 gap-5">
                       <div>
                         <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "#464888" }}>Naam *</label>
@@ -199,7 +218,7 @@ export default function Contact() {
                       <input type="checkbox" id="privacy" className="mt-1" required style={{ accentColor: "#464888" }} />
                       <label htmlFor="privacy" className="text-xs text-muted-foreground leading-relaxed">
                         Ik ga akkoord met het{" "}
-                        <a href="/cookiebeleid" className="hover:underline" style={{ color: "#464888" }}>privacybeleid</a>{" "}
+                        <a href="/privacybeleid" className="hover:underline" style={{ color: "#464888" }}>privacybeleid</a>{" "}
                         van Fixz24 Financial Services.
                       </label>
                     </div>

@@ -8,7 +8,7 @@ import { Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import CookieBanner from "./CookieBanner";
 
-const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663503644974/k5S6VbJ8Veeb6CpmzvwxZ9/Fixz24LogoWebsite_07d45446.webp";
+const LOGO_URL = "/images/fixz24-logo.webp";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -132,6 +132,9 @@ export default function Layout({ children }: LayoutProps) {
               <img
                 src={LOGO_URL}
                 alt="Fixz24 Financial Services"
+                width={614}
+                height={320}
+                fetchPriority="high"
                 className="h-10 w-auto cursor-pointer transition-all duration-300 hover:opacity-80 hover:scale-105"
               />
             </Link>
@@ -246,7 +249,7 @@ export default function Layout({ children }: LayoutProps) {
               </p>
               {/* Social / trust */}
               <div className="mt-5 flex gap-2">
-                {["KvK", "AVG", "ISO"].map((badge) => (
+                {["KvK 93838388", "AVG-proof"].map((badge) => (
                   <span key={badge} className="text-xs px-2 py-1 rounded-md font-semibold" style={{ backgroundColor: "rgba(172,151,115,0.15)", color: "#c4b08e", border: "1px solid rgba(172,151,115,0.2)" }}>
                     {badge}
                   </span>
@@ -306,10 +309,11 @@ export default function Layout({ children }: LayoutProps) {
               <ul className="space-y-2.5">
                 {[
                   { label: "info@fixz24.nl", href: "mailto:info@fixz24.nl" },
-                  { label: "+31 (0)20 123 4567", href: "tel:+31201234567" },
+                  { label: "085 - 235 50 81", href: "tel:+31852355081" },
+                  { label: "Algerastraat 11A, 3125 BS Schiedam", href: "https://maps.google.com/?q=Algerastraat+11A+3125+BS+Schiedam" },
                 ].map((c) => (
                   <li key={c.label}>
-                    <a href={c.href} className="text-sm transition-colors duration-200" style={{ color: "rgba(255,255,255,0.65)" }}
+                    <a href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined} className="text-sm transition-colors duration-200" style={{ color: "rgba(255,255,255,0.65)" }}
                       onMouseEnter={(e) => (e.currentTarget.style.color = "#c4b08e")}
                       onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.65)")}
                     >
@@ -342,9 +346,12 @@ export default function Layout({ children }: LayoutProps) {
               >
                 Cookiebeleid
               </Link>
-              <span className="text-xs cursor-pointer transition-colors duration-200" style={{ color: "rgba(255,255,255,0.45)" }}>
+              <Link href="/privacybeleid" className="text-xs transition-colors duration-200" style={{ color: "rgba(255,255,255,0.45)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#c4b08e")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.45)")}
+              >
                 Privacybeleid
-              </span>
+              </Link>
             </div>
           </div>
         </div>

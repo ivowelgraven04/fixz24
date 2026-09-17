@@ -22,11 +22,11 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
-const HERO_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663503644974/k5S6VbJ8Veeb6CpmzvwxZ9/hero-bg-SQ9qc9EM8EbkKZMzkv6UQS.webp";
-const CTA_BG = "https://d2xsxph8kpxj0f.cloudfront.net/310519663503644974/k5S6VbJ8Veeb6CpmzvwxZ9/cta-section-iag2nWuqELjatUdzt97D3p.webp";
-const IMG_ADMIN = "https://d2xsxph8kpxj0f.cloudfront.net/310519663503644974/k5S6VbJ8Veeb6CpmzvwxZ9/service-admin-T38Kk98nq2eci2aqjkJfZa.webp";
-const IMG_TAX = "https://d2xsxph8kpxj0f.cloudfront.net/310519663503644974/k5S6VbJ8Veeb6CpmzvwxZ9/service-tax-AU97pqSHcVxqNU9UZcpVqc.webp";
-const IMG_PAYROLL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663503644974/k5S6VbJ8Veeb6CpmzvwxZ9/service-payroll-AHbjc6VnduvpcbgD7ae9z9.webp";
+const HERO_BG = "/images/hero-bg.webp";
+const CTA_BG = "/images/cta-bg.webp";
+const IMG_ADMIN = "/images/service-admin.webp";
+const IMG_TAX = "/images/service-tax.webp";
+const IMG_PAYROLL = "/images/service-payroll.webp";
 
 const faqs = [
   { q: "Voor wie is Fixz24 geschikt?", a: "Fixz24 werkt voor ZZP'ers, VOF's, BV's en starters. Of je nu net begint of al jaren ondernemer bent — wij passen onze dienstverlening aan op jouw situatie." },
@@ -333,7 +333,7 @@ export default function Home() {
               >
                 {/* Image */}
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={service.img} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img src={service.img} alt={service.title} loading="lazy" width={1000} height={667} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   {/* Gradient overlay on image */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1a1a2e]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
                 </div>
